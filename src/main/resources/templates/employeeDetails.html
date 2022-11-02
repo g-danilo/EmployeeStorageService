@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Company</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Employee</h1>
+
+<form th:action="@{/employees/{id}(id=${employeeId})}" th:method="put" enctype="multipart/form-data" >
+  <input type="hidden" name="employeeId" th:value="${employeeId}">
+  Name: <input name="employeeName" th:value="${employeeName}"><br/>
+  Surname: <input name="employeeSurname" th:value="${employeeSurname}"><br/>
+  Email: <input name="employeeEmail" th:value="${employeeEmail}"><br/>
+  Address: <input name="employeeAddress" th:value="${employeeAddress}"><br/>
+  Salary: <input name="employeeSalary" th:value="${employeeSalary}"><br/>
+  <div>
+    Company: <select name="companyId">
+    <option th:each="company : ${companies}" th:value="${company.companyId}" th:text="${company.companyName}"></option>
+  </select>
+  </div>
+  <fieldset>
+    <legend>Active:</legend>
+    <div>
+      <input type="radio" id="yesA" name="isActive" th:value="1" th:checked="${isActive}" >
+      <label for="yesA">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noA" name="isActive" th:value="0" th:checked="${isActive} != 1">
+      <label for="noA">No</label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Deleted:</legend>
+    <div>
+      <input type="radio" id="yesD" name="isDeleted" th:value="1" th:checked="${isDeleted}">
+      <label for="yesD">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noD" name="isDeleted" th:value="0" th:checked="${isDeleted} != 1">
+      <label for="noD">No</label>
+    </div>
+  </fieldset>
+  <div>
+    <input type="submit" value="Update" name="button"/>
+  </div>
+</form>
+<br>
+<form action="" th:action="@{/employees/allActive/{id}(id=${companyId})}">
+  <input type="submit" value="Cancel">
+</form>
+</body>
+</html>

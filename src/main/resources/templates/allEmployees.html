@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Employees</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    table, th, td {
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+<h1>Employees</h1>
+<div th:if="${#httpServletRequest.requestURI.contains('/employees/all/')}">
+  <a th:href="@{/employees/allActive/{id}(id=${companyId})}">Show only active</a>
+</div>
+<div th:if="${#httpServletRequest.requestURI.contains('/employees/allActive/')}">
+  <a th:href="@{/employees/all/{id}(id=${companyId})}">Show all</a>
+</div>
+<br>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Salary</th>
+    <th>Company</th>
+    <th>Active</th>
+    <th>Deleted</th>
+    <th>Edit</th>
+    <th>Soft delete</th>
+    <th>Delete</th>
+  </tr>
+  <tr th:each="employee : ${employees}">
+    <td th:text="${employee.employeeName}"></td>
+    <td th:text="${employee.employeeSurname}"></td>
+    <td th:text="${employee.employeeEmail}"></td>
+    <td th:text="${employee.employeeAddress}"></td>
+    <td th:text="${employee.employeeSalary}"></td>
+    <td th:text="${companyName}"></td>
+    <td th:text="${employee.isActive} ? 'Yes' : 'No'"></td>
+    <td th:text="${employee.isDeleted} ? 'Yes' : 'No'"></td>
+    <td>
+      <a th:href="@{/employees/{id}(id=${employee.employeeId})}">view</a>
+    </td>
+    <td>
+      <form action="" th:action="@{/employees/{id}(id=${employee.employeeId})}" th:method="patch">
+        <input type="submit" th:value="${employee.isDeleted} ? 'restore' : 'soft delete'">
+      </form>
+    </td>
+    <td>
+      <form action="" th:action="@{/employees/{id}(id=${employee.employeeId})}" th:method="delete">
+        <input type="submit" value="delete">
+      </form>
+    </td>
+  </tr>
+</table>
+<br>
+<form action="" th:action="@{/employees/avgSalary/{id}(id=${companyId})}">
+  <input type="submit" value="Calculate average salary">
+</form>
+<br>
+<form action="" th:action="@{/companies/allActive}">
+  <input type="submit" value="Back">
+</form>
+<hr/>
+<form th:action="@{/employees/add}" method="post" enctype="multipart/form-data">
+  <div>
+    Name: <input name="employeeName" />
+  </div>
+  <div>
+    Surname: <input name="employeeSurname" />
+  </div>
+  <div>
+    Email: <input name="employeeEmail" />
+  </div>
+  <div>
+    Address: <input name="employeeAddress" />
+  </div>
+  <div>
+    Salary: <input name="employeeSalary" type="number" value="0.0"/>
+  </div>
+  <div>
+    Company: <select name="companyId">
+              <option th:each="company : ${companies}" th:value="${company.companyId}" th:text="${company.companyName}"></option>
+             </select>
+  </div>
+  <fieldset>
+    <legend>Active:</legend>
+    <div>
+      <input type="radio" id="yesA" name="isActive" value="1" checked>
+      <label for="yesA">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noA" name="isActive" value="0">
+      <label for="noA">No</label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Deleted:</legend>
+    <div>
+      <input type="radio" id="yesD" name="isDeleted" value="1">
+      <label for="yesD">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noD" name="isDeleted" value="0" checked>
+      <label for="noD">No</label>
+    </div>
+  </fieldset>
+  <div>
+    <input type="submit" value="Create employee" name="button"/>
+  </div>
+</form>
+</body>
+</html>

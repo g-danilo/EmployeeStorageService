@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Company</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Company</h1>
+
+<form th:action="@{/companies/{id}(id=${companyId})}" th:method="put" enctype="multipart/form-data" >
+  <input type="hidden" name="companyId" th:value="${companyId}">
+Name: <input name="companyName" th:value="${companyName}"><br/>
+<fieldset>
+  <legend>Active:</legend>
+  <div>
+    <input type="radio" id="yesA" name="isActive" th:value="1" th:checked="${isActive}" >
+    <label for="yesA">Yes</label>
+  </div>
+  <div>
+    <input type="radio" id="noA" name="isActive" th:value="0" th:checked="${isActive} != 1">
+    <label for="noA">No</label>
+  </div>
+</fieldset>
+<fieldset>
+  <legend>Deleted:</legend>
+  <div>
+    <input type="radio" id="yesD" name="isDeleted" th:value="1" th:checked="${isDeleted}">
+    <label for="yesD">Yes</label>
+  </div>
+  <div>
+    <input type="radio" id="noD" name="isDeleted" th:value="0" th:checked="${isDeleted} != 1">
+    <label for="noD">No</label>
+  </div>
+</fieldset>
+  <div>
+    <input type="submit" value="Update" name="button"/>
+  </div>
+</form>
+<br>
+<form action="" th:action="@{/companies/allActive}">
+  <input type="submit" value="Cancel">
+</form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Error</h1>
+<div>
+    <p th:text="${errorMessage}"></p>
+</div>
+<form action="" th:action="@{/companies/allActive}">
+    <input type="submit" value="Back">
+</form>
+</body>
+</html>

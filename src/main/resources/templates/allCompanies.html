@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Companies</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    table, th, td {
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+<h1>Companies</h1>
+<div th:if="${#httpServletRequest.requestURI == '/companies/all'}">
+  <a th:href="@{/companies/allActive}">Show only active</a>
+</div>
+<div th:if="${#httpServletRequest.requestURI == '/companies/allActive'}">
+  <a th:href="@{/companies/all}">Show all</a>
+</div>
+<br>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Active</th>
+    <th>Deleted</th>
+    <th>Edit</th>
+    <th>Soft Delete</th>
+    <th>Delete</th>
+    <th>Show employees</th>
+  </tr>
+  <tr th:each="company : ${companies}">
+    <td th:text="${company.companyName}"></td>
+    <td th:text="${company.isActive} ? 'Yes' : 'No'"></td>
+    <td th:text="${company.isDeleted} ? 'Yes' : 'No'"></td>
+    <td>
+      <a th:href="@{/companies/{id}(id=${company.companyId})}">view</a>
+    </td>
+    <td>
+      <form action="" th:action="@{/companies/{id}(id=${company.companyId})}" th:method="patch">
+        <input type="submit" th:value="${company.isDeleted} ? 'restore' : 'soft delete'">
+      </form>
+    </td>
+    <td>
+      <form action="" th:action="@{/companies/{id}(id=${company.companyId})}" th:method="delete">
+        <input type="submit" value="delete">
+      </form>
+    </td>
+    <td>
+        <a th:href="@{/employees/allActive/{id}(id=${company.companyId})}">show employees</a>
+    </td>
+  </tr>
+</table>
+<hr/>
+<form th:action="@{/companies/add}" method="post" enctype="multipart/form-data">
+  <div>
+    Name: <input name="companyName" />
+  </div>
+  <fieldset>
+    <legend>Active:</legend>
+    <div>
+      <input type="radio" id="yesA" name="isActive" value="1" checked>
+      <label for="yesA">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noA" name="isActive" value="0">
+      <label for="noA">No</label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Deleted:</legend>
+    <div>
+      <input type="radio" id="yesD" name="isDeleted" value="1">
+      <label for="yesD">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="noD" name="isDeleted" value="0" checked>
+      <label for="noD">No</label>
+    </div>
+  </fieldset>
+  <br>
+  <div>
+    <input type="submit" value="Create company" name="button"/>
+  </div>
+</form>
+</body>
+</html>

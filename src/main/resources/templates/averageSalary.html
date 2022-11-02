@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Average salary: <label name="companyName" th:text="${avgSalary}"></label><br/><br>
+<form action="" th:action="@{/employees/allActive/{id}(id=${companyId})}">
+    <input type="submit" value="Go back">
+</form>
+</body>
+</html>
