@@ -1,16 +1,17 @@
 Employee Storage Service
 
-The project can be found here:
 
 I created a very basic front end for the application, so the service can be accessed and tested at localhost:8080/ from a browser.
 
 Configuration:
+
 	- an attached mySql database can be used to set the schema up as, well to import some existing data,
 	- copy the project and import it to an IDE of choice,
 	- in the project at location src/main/resources/ a file name application.properties can be found, change the access credentials for the database.
 	- start the application from the IDE.
 	
 Overview:
+
 	- After accessing the application at localhost, a user can see all of the existing active companies,
 	- a company has a Name and active and deleted flags,
 	- clicking on the Show all button, a user can list all companies, active, inactive and deleted,
